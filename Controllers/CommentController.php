@@ -45,16 +45,18 @@ class CommentController
             $_GET['transactionHashes'] &&
             $_COOKIE[$commentCookie]
         ) {
-            $hashedComment = json_decode(stripslashes($_COOKIE[$commentCookie]));
-            wp_insert_comment([
-                'comment_content' => sanitize_text_field($hashedComment->comment),
-                'comment_approved' => 1,
-                'comment_post_ID' => $hashedComment->comment_post_ID,
-                'user_id' => $currentUser->ID,
-                'comment_author' => $currentUser->user_login,
-                'comment_author_email' => sanitize_text_field($currentUser->user_email),
-                'comment_author_url' => sanitize_text_field($currentUser->user_url),
-            ]);
+            $hashedComment = json_decode(stripslashes(sanitize_text_field($_COOKIE[$commentCookie])));
+            if ($hashedComment) {
+                wp_insert_comment([
+                    'comment_content' => sanitize_text_field($hashedComment->comment),
+                    'comment_approved' => 1,
+                    'comment_post_ID' => $hashedComment->comment_post_ID,
+                    'user_id' => $currentUser->ID,
+                    'comment_author' => $currentUser->user_login,
+                    'comment_author_email' => sanitize_text_field($currentUser->user_email),
+                    'comment_author_url' => sanitize_text_field($currentUser->user_url),
+                ]);
+            }
             unset($_COOKIE[$commentCookie]);
             setcookie($commentCookie, '', time() - 3600, '/');
         }

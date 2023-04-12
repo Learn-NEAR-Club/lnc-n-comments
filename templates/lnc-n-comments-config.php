@@ -16,13 +16,13 @@ ob_start();
     ?>
     <div class="wrap">
         <h1><?php esc_html_e('LNC Near comments configurations', 'lnc-n-comments'); ?></h1>
-        <?php if (isset($result[0]) && isset($result[0]['code']) && isset($result[0]['message'])): ?>
+        <?php if (isset($result[0]['message']) && isset($result[0]['code'])): ?>
             <?php if ($result[0]['code'] === 'settings_updated') {
                 $noticeClass = 'notice-success';
             }
             ?>
-            <div class="notice <?php echo $noticeClass; ?>">
-                <p><?php echo $result[0]['message']; ?></p>
+            <div class="notice <?php echo esc_html($noticeClass); ?>">
+                <p><?php echo esc_html($result[0]['message']); ?></p>
             </div>
         <?php endif; ?>
         <form method="post" action="options.php" class="settings-form">
@@ -31,21 +31,21 @@ ob_start();
                 <div class="form-group">
                     <label for="comment-form-selector"><?php _e('Comment form selector'); ?></label>
                     <input type="text" id="comment-form-selector"
-                           name="<?php echo "$args->optionsGroup[comment_form_selector]"; ?>"
+                           name="<?php echo esc_html("$args->optionsGroup[comment_form_selector]"); ?>"
                            value="<?php echo esc_html($commentFormSelector); ?>" class="regular-text"/>
                 </div>
             </div>
             <div class="form-table">
                 <div class="form-group">
                     <label for="reward-value"><?php _e('Reward value'); ?></label>
-                    <input type="number" id="reward-value" name="<?php echo "$args->optionsGroup[reward_value]"; ?>"
+                    <input type="number" id="reward-value" name="<?php echo esc_html("$args->optionsGroup[reward_value]"); ?>"
                            value="<?php echo esc_html($rewardValue); ?>" min="0" step="0.001" class="regular-text"/>
                 </div>
             </div>
             <div class="form-table">
                 <div class="form-group">
                     <label for="site-owner"><?php _e('Site owner'); ?></label>
-                    <input type="text" id="site-owner" name="<?php echo "$args->optionsGroup[site_owner]"; ?>"
+                    <input type="text" id="site-owner" name="<?php echo esc_html("$args->optionsGroup[site_owner]"); ?>"
                            value="<?php echo esc_html($siteOwner); ?>" class="regular-text"/>
                 </div>
             </div>
