@@ -45,7 +45,7 @@ class CommentController
             $_GET['transactionHashes'] &&
             $_COOKIE[$commentCookie]
         ) {
-            $hashedComment = json_decode(wp_unslash(sanitize_text_field($commentCookie)));
+            $hashedComment = json_decode(wp_unslash(sanitize_text_field($_COOKIE[$commentCookie])));
             if ($hashedComment) {
                 wp_insert_comment([
                     'comment_content' => sanitize_text_field($hashedComment->comment),
